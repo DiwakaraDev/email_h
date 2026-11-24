@@ -1,10 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const formView = document.getElementById('formView');
+    const successView = document.getElementById('successView');
+    const backToFormBtn = document.getElementById('backToFormBtn');
+    const continueBtn = document.getElementById('continueBtn');
+    const successNotice = document.getElementById('successNotice');
+
     const form = document.getElementById('passwordForm');
     const currentPasswordInput = document.getElementById('currentPassword');
     const newPasswordInput = document.getElementById('newPassword');
     const confirmPasswordInput = document.getElementById('confirmPassword');
     const showPasswordToggle = document.getElementById('showPasswordToggle');
+    const currentPasswordError = document.getElementById('currentPasswordError');
+    const currentPasswordErrorText = document.getElementById('currentPasswordErrorText');
+    const newPasswordError = document.getElementById('newPasswordError');
+    const newPasswordErrorText = document.getElementById('newPasswordErrorText');
     const matchError = document.getElementById('matchError');
+    const matchErrorText = document.getElementById('matchErrorText');
     const statusMessage = document.getElementById('statusMessage');
     const statusIcon = document.getElementById('statusIcon');
     const statusText = document.getElementById('statusText');
@@ -18,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     /**
-     * Toggle password visibility for all password fields
+     * Toggle password visibility for all password input fields.
      */
     showPasswordToggle.addEventListener('change', (e) => {
         const inputType = e.target.checked ? 'text' : 'password';
@@ -28,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /**
-     * Calculate password strength score (0 to 4)
+     * Calculate password strength score (0 to 4).
      */
     function calculateStrength(password) {
         let score = 0;
@@ -41,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Update strength meter UI bars and label
+     * Update visual strength meter bars and label.
      */
     function updateStrengthMeter() {
         const val = newPasswordInput.value;
@@ -77,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Display inline status alert
+     * Display inline status message box.
      */
     function showStatus(type, message) {
         statusMessage.className = `status-alert ${type}`;
@@ -93,59 +104,115 @@ document.addEventListener('DOMContentLoaded', () => {
         statusText.textContent = message;
     }
 
+    /**
+     * Show an inline error message directly below a specific input field.
+     */
+    function setFieldError(inputEl, errorEl, errorTextEl, message) {
+        inputEl.classList.add('error');
+        errorTextEl.textContent = message;
+        errorEl.classList.remove('hidden');
+    }
+
+    /**
+     * Clear the inline error state from a specific input field.
+     */
+    function clearFieldError(inputEl, errorEl) {
+        inputEl.classList.remove('error');
+        errorEl.classList.add('hidden');
+    }
+
+    /**
+     * Clear all inline field errors.
+     */
+    function clearAllFieldErrors() {
+        clearFieldError(currentPasswordInput, currentPasswordError);
+        clearFieldError(newPasswordInput, newPasswordError);
+        clearFieldError(confirmPasswordInput, matchError);
+    }
+
+    currentPasswordInput.addEventListener('input', () => {
+        clearFieldError(currentPasswordInput, currentPasswordError);
+        statusMessage.classList.add('hidden');
+    });
+
     newPasswordInput.addEventListener('input', () => {
         updateStrengthMeter();
-        matchError.classList.add('hidden');
+        clearFieldError(newPasswordInput, newPasswordError);
+        clearFieldError(confirmPasswordInput, matchError);
+        statusMessage.classList.add('hidden');
     });
 
     confirmPasswordInput.addEventListener('input', () => {
-        matchError.classList.add('hidden');
+        clearFieldError(confirmPasswordInput, matchError);
+        statusMessage.classList.add('hidden');
     });
 
     cancelBtn.addEventListener('click', () => {
         form.reset();
         updateStrengthMeter();
-        matchError.classList.add('hidden');
+        clearAllFieldErrors();
         showStatus('info', 'Password change canceled. Form has been cleared.');
     });
 
     /**
-     * Form validation handler
+     * Handle form submission (Client-side UI preview).
      */
     form.addEventListener('submit', (e) => {
         e.preventDefault();
+        clearAllFieldErrors();
+        statusMessage.classList.add('hidden');
+
         const currentPass = currentPasswordInput.value;
         const newPass = newPasswordInput.value;
         const confirmPass = confirmPasswordInput.value;
 
         if (!currentPass.trim()) {
-            showStatus('error', 'Please enter your current password.');
+            setFieldError(currentPasswordInput, currentPasswordError, currentPasswordErrorText, 'Enter your current password');
             currentPasswordInput.focus();
             return;
         }
 
         if (newPass.length < 8) {
-            showStatus('error', 'Please enter a password with at least 8 characters.');
+            setFieldError(newPasswordInput, newPasswordError, newPasswordErrorText, 'Use 8 characters or more for your password');
             newPasswordInput.focus();
             return;
         }
 
         if (newPass === currentPass) {
-            showStatus('error', 'Your new password must be different from your current password.');
+            setFieldError(newPasswordInput, newPasswordError, newPasswordErrorText, 'Your new password must be different from your current password');
             newPasswordInput.focus();
             return;
         }
 
         if (newPass !== confirmPass) {
-            matchError.classList.remove('hidden');
-            showStatus('error', 'Passwords do not match. Please check and try again.');
+            setFieldError(confirmPasswordInput, matchError, matchErrorText, "Those passwords didn't match. Try again.");
             confirmPasswordInput.focus();
             return;
         }
 
-        // Demo success feedback
-        showStatus('success', 'Password updated successfully!');
+        // Switch to the Password Changed Success View
         form.reset();
         updateStrengthMeter();
+        clearAllFieldErrors();
+        statusMessage.classList.add('hidden');
+        successNotice.classList.add('hidden');
+        formView.classList.add('hidden');
+        successView.classList.remove('hidden');
+    });
+
+    /**
+     * Return to the password change form for previewing again.
+     */
+    backToFormBtn.addEventListener('click', () => {
+        successView.classList.add('hidden');
+        formView.classList.remove('hidden');
+        successNotice.classList.add('hidden');
+    });
+
+    /**
+     * Action for the "Get started" button on the success view.
+     */
+    continueBtn.addEventListener('click', () => {
+        successNotice.classList.remove('hidden');
     });
 });
