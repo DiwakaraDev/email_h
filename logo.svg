@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none">
+    <defs>
+        <linearGradient id="shieldGrad" x1="6" y1="6" x2="42" y2="42" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#3b82f6" />
+            <stop offset="100%" stop-color="#1d4ed8" />
+        </linearGradient>
+        <linearGradient id="glowGrad" x1="24" y1="12" x2="24" y2="36" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0.3" />
+            <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+        </linearGradient>
+    </defs>
+    <!-- Background Shield -->
+    <path d="M24 4L8 10V22C8 32.5 14.8 42.1 24 44C33.2 42.1 40 32.5 40 22V10L24 4Z" fill="url(#shieldGrad)" />
+    <!-- Inner Accent -->
+    <path d="M24 7L11 12V22C11 30.5 16.5 38.5 24 40.2C31.5 38.5 37 30.5 37 22V12L24 7Z" fill="url(#glowGrad)" />
+    <!-- Lock Body -->
+    <rect x="18" y="22" width="12" height="10" rx="2" fill="#ffffff" />
+    <!-- Lock Shackle -->
+    <path d="M20 22V18C20 15.7909 21.7909 14 24 14C26.2091 14 28 15.7909 28 18V22" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" />
+    <!-- Keyhole -->
+    <circle cx="24" cy="26" r="1.5" fill="#2563eb" />
+    <path d="M24 27.5V29" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" />
+</svg>

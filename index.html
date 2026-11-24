@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Password - Account Security</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Main Container -->
+    <main class="page-container">
+        <!-- Top App Brand Header -->
+        <header class="app-header">
+            <img src="img/logo.svg" alt="My Account Logo" class="app-logo" />
+            <span class="app-title">My account</span>
+        </header>
+
+        <!-- Card Wrapper -->
+        <div class="card">
+            
+            <div class="card-grid">
+                
+                <!-- Left Column: Details & Guidelines -->
+                <div class="info-section">
+                    <h1 class="card-title">Change password</h1>
+
+                    <!-- User Account Pill -->
+                    <div class="user-pill">
+                        <div class="user-avatar">U</div>
+                        <span class="user-email">user@example.com</span>
+                    </div>
+
+                    <p class="description">
+                        Choose a strong password and don't reuse it for other accounts. Changing your password will sign you out of your other active sessions.
+                    </p>
+                </div>
+
+                <!-- Right Column: Password Form -->
+                <form id="passwordForm" class="password-form" novalidate>
+                    
+                    <!-- Inline Feedback Alert -->
+                    <div id="statusMessage" class="status-alert hidden" role="alert">
+                        <span id="statusIcon" class="status-icon"></span>
+                        <span id="statusText" class="status-text"></span>
+                    </div>
+
+                    <!-- Current Password -->
+                    <div class="form-group">
+                        <label for="currentPassword" class="form-label">Current password</label>
+                        <input
+                            type="password"
+                            id="currentPassword"
+                            name="currentPassword"
+                            autocomplete="current-password"
+                            placeholder="Enter current password"
+                            class="form-input"
+                            required
+                        />
+                    </div>
+
+                    <!-- New Password -->
+                    <div class="form-group">
+                        <label for="newPassword" class="form-label">New password</label>
+                        <input
+                            type="password"
+                            id="newPassword"
+                            name="newPassword"
+                            autocomplete="new-password"
+                            placeholder="Enter new password"
+                            class="form-input"
+                            required
+                        />
+                        
+                        <!-- Strength Meter -->
+                        <div class="strength-meter-container">
+                            <div class="meter-bars">
+                                <div id="bar1" class="meter-bar"></div>
+                                <div id="bar2" class="meter-bar"></div>
+                                <div id="bar3" class="meter-bar"></div>
+                                <div id="bar4" class="meter-bar"></div>
+                            </div>
+                            <p id="strengthLabel" class="strength-label">
+                                Use at least 8 characters. Mix letters, numbers, and symbols.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Confirm New Password -->
+                    <div class="form-group">
+                        <label for="confirmPassword" class="form-label">Confirm new password</label>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            autocomplete="new-password"
+                            placeholder="Re-enter new password"
+                            class="form-input"
+                            required
+                        />
+                        <p id="matchError" class="field-error hidden">
+                            Those passwords didn't match. Please try again.
+                        </p>
+                    </div>
+
+                    <!-- Show Password Checkbox -->
+                    <div class="checkbox-container">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="showPasswordToggle" class="checkbox-input" />
+                            <span>Show password</span>
+                        </label>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="form-actions">
+                        <button type="button" id="cancelBtn" class="btn btn-secondary">
+                            Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Change password
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-lang">
+                <select aria-label="Select Language" class="lang-select">
+                    <option value="en">English (United States)</option>
+                    <option value="si">සිංහල (Sinhala)</option>
+                    <option value="ta">தமிழ் (Tamil)</option>
+                </select>
+            </div>
+            <div class="footer-links">
+                <a href="#help" onclick="return false;">Help</a>
+                <a href="#privacy" onclick="return false;">Privacy</a>
+                <a href="#terms" onclick="return false;">Terms</a>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Script -->
+    <script src="script.js"></script>
+</body>
+</html>
