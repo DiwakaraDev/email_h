@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,11 +12,12 @@
     <!-- Custom Stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <!-- Main Container -->
     <main class="page-container">
-        
+
         <!-- Top App Brand Header (Unchanged Logo & Title) -->
         <header class="app-header">
             <img src="img/logo.svg" alt="My Account Logo" class="app-logo" />
@@ -24,10 +26,10 @@
 
         <!-- Card Wrapper -->
         <div class="card">
-            
+
             <!-- View 1: Password Change Form (Two-Column Grid) -->
             <div id="formView" class="card-grid">
-                
+
                 <!-- Left Column: Title, User Badge & Guidelines -->
                 <div class="info-section">
                     <h1 class="card-title">Change password</h1>
@@ -39,13 +41,14 @@
                     </div>
 
                     <p class="description">
-                        Choose a strong password and don't reuse it for other accounts. Changing your password will sign you out of your other active sessions.
+                        Choose a strong password and don't reuse it for other accounts. Changing your password will sign
+                        you out of your other active sessions.
                     </p>
                 </div>
 
                 <!-- Right Column: Password Form -->
                 <form id="passwordForm" class="password-form" novalidate>
-                    
+
                     <!-- Inline Feedback Alert -->
                     <div id="statusMessage" class="status-alert hidden" role="alert">
                         <span id="statusIcon" class="status-icon"></span>
@@ -55,18 +58,14 @@
                     <!-- Current Password Input -->
                     <div class="form-group">
                         <label for="currentPassword" class="form-label">Current password</label>
-                        <input
-                            type="password"
-                            id="currentPassword"
-                            name="currentPassword"
-                            autocomplete="current-password"
-                            placeholder="Enter current password"
-                            class="form-input"
-                            required
-                        />
+                        <input type="password" id="currentPassword" name="currentPassword"
+                            autocomplete="current-password" placeholder="Enter current password" class="form-input"
+                            required />
                         <p id="currentPasswordError" class="field-error hidden" role="alert">
                             <svg class="error-svg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                    clip-rule="evenodd" />
                             </svg>
                             <span id="currentPasswordErrorText"></span>
                         </p>
@@ -75,22 +74,17 @@
                     <!-- New Password Input -->
                     <div class="form-group">
                         <label for="newPassword" class="form-label">New password</label>
-                        <input
-                            type="password"
-                            id="newPassword"
-                            name="newPassword"
-                            autocomplete="new-password"
-                            placeholder="Enter new password"
-                            class="form-input"
-                            required
-                        />
+                        <input type="password" id="newPassword" name="newPassword" autocomplete="new-password"
+                            placeholder="Enter new password" class="form-input" required />
                         <p id="newPasswordError" class="field-error hidden" role="alert">
                             <svg class="error-svg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                    clip-rule="evenodd" />
                             </svg>
                             <span id="newPasswordErrorText"></span>
                         </p>
-                        
+
                         <!-- Password Strength Meter -->
                         <div class="strength-meter-container">
                             <div class="meter-bars">
@@ -108,18 +102,13 @@
                     <!-- Confirm New Password Input -->
                     <div class="form-group">
                         <label for="confirmPassword" class="form-label">Confirm new password</label>
-                        <input
-                            type="password"
-                            id="confirmPassword"
-                            name="confirmPassword"
-                            autocomplete="new-password"
-                            placeholder="Re-enter new password"
-                            class="form-input"
-                            required
-                        />
+                        <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="new-password"
+                            placeholder="Re-enter new password" class="form-input" required />
                         <p id="matchError" class="field-error hidden" role="alert">
                             <svg class="error-svg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                                <path fill-rule="evenodd"
+                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                                    clip-rule="evenodd" />
                             </svg>
                             <span id="matchErrorText">Those passwords didn't match. Please try again.</span>
                         </p>
@@ -149,12 +138,14 @@
             <!-- View 2: Password Changed Success Screen (Hidden by default) -->
             <div id="successView" class="hidden">
                 <div class="card-grid">
-                    
+
                     <!-- Left Column: Success Icon, Heading & Account Pill -->
                     <div class="info-section">
                         <div class="success-badge">
-                            <svg class="success-check-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
+                            <svg class="success-check-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M5 13l4 4L19 7" />
                             </svg>
                         </div>
 
@@ -167,7 +158,8 @@
                         </div>
 
                         <p class="description">
-                            Your password was updated successfully. We keep your account protected by signing you out of other devices where this password was used.
+                            Your password was updated successfully. We keep your account protected by signing you out of
+                            other devices where this password was used.
                         </p>
                     </div>
 
@@ -178,7 +170,8 @@
                             <div class="security-card-header">
                                 <div class="security-icon-wrap">
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                                     </svg>
                                 </div>
                                 <div class="security-text-wrap">
@@ -191,14 +184,18 @@
 
                             <ul class="security-checklist">
                                 <li>
-                                    <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                    <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7" />
                                     </svg>
                                     <span>Strong password updated just now</span>
                                 </li>
                                 <li>
-                                    <svg class="lock-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                    <svg class="lock-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                     </svg>
                                     <span>Review 2-Step Verification &amp; recovery email</span>
                                 </li>
@@ -244,6 +241,8 @@
     </main>
 
     <!-- Custom Script -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>

